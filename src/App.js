@@ -1,26 +1,47 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Component } from "react";
+import Convert from "./timer";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class Timecont extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      time: 0,
+      status: false
+    };
+
+    setInterval(() => {
+      if (this.state.status) {
+        this.setState({
+          time: this.state.time + 1000
+        });
+      }
+    }, 1000);
+  }
+  statusChange = () => {
+    this.setState({
+      status: !this.state.status
+    });
+  };
+  statusreset = () => {
+    this.setState({
+      time: 0
+    });
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <Convert time={this.state.time} />
+
+        <div class="btn">
+          <button onClick={this.statusChange}>{this.state.status ? "Pause" : "Start"}</button>
+          <button onClick={this.statusreset}>Reset</button>
+        </div>
+      </div>
+    );
+  }
 }
-
-export default App;
+export default Timecont;
